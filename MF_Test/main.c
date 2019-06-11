@@ -57,15 +57,6 @@ struct sockaddr_in *sockaddr_in_init(struct sockaddr_in *sockaddr, uint16_t port
     return 0;
 }
 
-void put_int_to_LE(char *buff, size_t buff_size, size_t number_to_devide) {
-    if(buff == NULL) return;
-    memset(buff, 0, buff_size);
-    buff[0] = (char)(number_to_devide) >> 0;
-    buff[1] = (char)(number_to_devide) >> 8;
-    buff[2] = (char)(number_to_devide) >> 16;
-    buff[3] = (char)(number_to_devide) >> 24;
-}
-
 void *handle_client(void *arg) {
     if(arg == NULL) {
         pthread_exit(0);
