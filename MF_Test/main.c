@@ -31,8 +31,6 @@ struct sockaddr_in device_client_config;
 
 int device_client_descriptor = 0;
 
-int counter = 0;
-
 unsigned int clients_connections_count = 0;
 
 void write_to_file(int fprefix, char *fname, char *img, int size_img) {
