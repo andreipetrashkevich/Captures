@@ -33,6 +33,8 @@ int device_client_descriptor = 0;
 
 unsigned int clients_connections_count = 0;
 
+unsigned int unique_img_counter = 0;
+
 void write_to_file(int fprefix, char *fname, char *img, int size_img) {
     char fpath[30];
     sprintf(fpath, "%s%d%s%s", "/Users/user/", fprefix, fname, ".jpeg");
@@ -100,7 +102,7 @@ void *handle_client(void *arg) {
                     break;
                 }
 
-                
+//                (Size of buff sends properly. but after writing buff to client it is corrupted. and created image cannot be opened).
                 if(send(*client_descriptor, queue->images[idx].buff, queue->images[idx].size, MSG_SEND) < 0) {
                     perror("SERVER: error sending image data\n");
                     break;
@@ -168,6 +170,8 @@ void *start_fetching_images() {
             printf("SERVER: read %lu byte from %u byte, remain byte to read %lu byte\n", data_read, img_size, img_size - data_read);
         }
 
+        //If write to file on server without sending img_data to client - Images are writed properly and can be opened. After sending img_data to client (handle_client func) - there is an issue with corrupted data.
+//        write_to_file(unique_img_counter, "A", img_data, img_size);
         struct image img;
         memset(&img, 0, sizeof(img));
         img.buff = img_data;
